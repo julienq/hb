@@ -23,18 +23,18 @@
 
   var pc = svg.appendChild(flexo.$rect({ fill: "none", stroke: "black",
     "stroke-width": 8, "stroke-linejoin": "round", width: sz, height: sz }));
-  flexo.make_property(pc, "x", function (x_) {
+  flexo.make_property(pc, "_x", function (x_) {
     var x__ = flexo.clamp(x_, x, x + w - 1);
     this.setAttribute("x", x__ * sz);
     return x__;
   });
-  flexo.make_property(pc, "y", function (y_) {
+  flexo.make_property(pc, "_y", function (y_) {
     var y__ = flexo.clamp(y_, y, y + h - 1);
     this.setAttribute("y", y__ * sz);
     return y__;
   });
-  pc.x = 0;
-  pc.y = 0;
+  pc._x = 0;
+  pc._y = 0;
 
   for (var i = 0; i < w; ++i) {
     for (var j = 0; j < h; ++j) {
@@ -42,8 +42,8 @@
         var mask = svg.appendChild(flexo.$rect({ "fill-opacity": 0, width: sz,
           height: sz, x: (x + i_) * sz, y: (y + j_) * sz }));
         vs.addPointerListener(mask, vs.POINTER_END, function () {
-          pc.x = x + i_;
-          pc.y = y + j_;
+          pc._x = x + i_;
+          pc._y = y + j_;
         }, false);
       }(i, j));
     }
