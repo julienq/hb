@@ -41,7 +41,24 @@ svg {
     </style>
   </head>
   <body>
-    <div class="expand"></div>
+    <div class="expand">
+      <svg>
+        <defs>
+          <g id="primitive-up" stroke="black" stroke-linejoin="round"
+            stroke-linecap="round" stroke-width="8">
+            <line x1="50" y1="20" x2="50" y2="80"/>
+            <line x1="50" y1="20" x2="30" y2="40"/>
+            <line x1="50" y1="20" x2="70" y2="40"/>
+          </g>
+          <use id="primitive-right" xlink:href="#primitive-up"
+            transform="rotate(90, 50, 50)"/>
+          <use id="primitive-down" xlink:href="#primitive-up"
+            transform="rotate(180, 50, 50)"/>
+          <use id="primitive-left" xlink:href="#primitive-up"
+            transform="rotate(270, 50, 50)"/>
+        </defs>
+      </svg>
+    </div>
     <script src="hb.js"></script>
   </body>
 </html>

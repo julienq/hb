@@ -1,12 +1,11 @@
 CP = cp -f
 RM = rm -rf
 GIT_GET = git clone --depth 1
-GIT_PULL = git pull
-MKDIR = mkdir -pv
+MKDIR = mkdir -p
 
 LIBSDIR = libs
-BENDER = libs/bender
-GESTURE = libs/gesture
+BENDER = $(LIBSDIR)/bender
+GESTURE = $(LIBSDIR)/gesture
 
 BENDER_URL = https://github.com/bendr/bender.git
 GESTURE_URL = https://github.com/dthevenin/Gesture.git
@@ -17,12 +16,12 @@ $(LIBSDIR):
 	$(MKDIR) $(LIBSDIR)
 
 libs/flexo.js:	$(LIBSDIR)
-	$(GIT_GET) -b uninstance $(BENDER_URL) $(BENDER)
+	cd $(LIBSDIR); $(GIT_GET) -b uninstance $(BENDER_URL)
 	$(CP) $(BENDER)/flexo.js $@
 
 libs/pointer.js: $(LIBSDIR)
-	$(GIT_GET) $(GESTURE_URL) $(GESTURE)
+	cd $(LIBSDIR); $(GIT_GET) $(GESTURE_URL)
 	$(CP) $(GESTURE)/build/vs_pointer_standalone.js $@
 
 realclean:
-	$(RM) libs
+	$(RM) $(LIBSDIR)
