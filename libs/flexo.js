@@ -15,6 +15,7 @@
     Function.prototype.bind.native = false;
   }
 
+
   // Objects
 
   // Test whether x is an instance of y (i.e. y is the prototype of x, or the
@@ -24,6 +25,18 @@
     return !!proto && (proto === y || flexo.instance_of(proto, y));
   };
 
+  // Define a property named `name` on object `obj` and make it read-only (i.e.
+  // it only has a get.)
+  flexo.make_readonly = function (obj, name, get) {
+    Object.defineProperty(obj, name, { enumerable: true,
+      get: typeof get === "function" ? get : function () { return get; }
+    });
+  };
+
+  // Define a property named `name` on object `obj` with the custom setter `set`
+  // The setter gets two parameters (<new value>, <current value>) and returns
+  // the new value to be set; if the setter returns undefined, then the value is
+  // not updated
   flexo.make_property = function (obj, name, set) {
     var value;
     Object.defineProperty(obj, name, { enumerable: true,
@@ -467,6 +480,7 @@
   // For convenience both "html" and "xhtml" are defined as prefixes for XHTML.
   flexo.ns = {
     html: "http://www.w3.org/1999/xhtml",
+    m: "http://www.w3.org/1998/Math/MathML",
     svg: "http://www.w3.org/2000/svg",
     xhtml: "http://www.w3.org/1999/xhtml",
     xlink: "http://www.w3.org/1999/xlink",
@@ -603,7 +617,44 @@
         flexo.create_element.bind(window.document, "svg:" + tag);
     });
 
-    // TODO MathML
+    // MathML elements (http://www.w3.org/TR/MathML/appendixi.html#index.elem)
+    // Elements that need an explicit m: prefix: image, set
+    ["abs", "and", "annotation", "apply", "approx", "arccos", "arccosh",
+      "arccot", "arccoth", "arccsc", "arccsch", "arcsec", "arcsech", "arcsin",
+      "arcsinh", "arctan", "arctanh", "arg", "bind", "bvar", "card",
+      "cartesianproduct", "cbytes", "ceiling", "cerror", "ci", "cn", "codomain",
+      "complexes", "compose", "condition", "conjugate", "cos", "cosh", "cot",
+      "coth", "cs", "csc", "csch", "csymbol", "curl", "declare", "degree",
+      "determinant", "diff", "divergence", "divide", "domain",
+      "domainofapplication", "el", "emptyset", "eq", "equivalent", "eulergamma",
+      "exists", "exp", "exponentiale", "factorial", "factorof", "false",
+      "floor", "fn", "forall", "gcd", "geq", "grad", "gt", "ident", "imaginary",
+      "imaginaryi", "implies", "in", "infinity", "int", "integers", "intersect",
+      "interval", "inverse", "lambda", "laplacian", "lcm", "leq", "limit",
+      "list", "ln", "log", "logbase", "lowlimi", "lt", "maction", "malign",
+      "maligngroup", "malignmark", "malignscope", "math", "matrix", "matrixrow",
+      "max", "mean", "median", "menclose", "merror", "mfenced", "mfrac",
+      "mfraction", "mglyph", "mi", "minus", "mlabeledtr", "mlongdiv",
+      "mmultiscripts", "mn", "mo", "mode", "moment", "momentabout", "mover",
+      "mpadded", "mphantom", "mprescripts", "mroot", "mrow", "ms", "mscarries",
+      "mscarry", "msgroup", "msline", "mspace", "msqrt", "msrow", "mstack",
+      "mstyle", "msub", "msubsup", "msup", "mtable", "mtd", "mtext", "mtr",
+      "munder", "munderover", "naturalnumbers", "neq", "none", "not",
+      "notanumber", "note", "notin", "notprsubset", "notsubset", "or",
+      "otherwise", "outerproduct", "partialdiff", "pi", "piece", "piecewise",
+      "plus", "power", "primes", "product", "prsubset", "quotient", "rationals",
+      "real", "reals", "reln", "rem", "root", "scalarproduct", "sdev", "sec",
+      "sech", "selector", "semantics", "sep", "setdiff", "share", "sin",
+      "subset", "sum", "tan", "tanh", "tendsto", "times", "transpose", "true",
+      "union", "uplimit", "variance", "vector", "vectorproduct", "xor"
+    ].forEach(function (tag) {
+      flexo["$" + tag] = flexo.create_element.bind(window.document, "m:" + tag);
+    });
+    
+    // MathML elements with a dash in their name (only annotation-xml, actually) 
+    // are converted to camel case
+    flexo.$annotationXml = flexo.create_element.bind(window.document,
+        "m:annotation-xml");
   }
 
   // Get clientX/clientY as an object { x: ..., y: ... } for events that may
