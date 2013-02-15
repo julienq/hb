@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>✐</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="hb.css">
+    <script src="libs/pointer.js"></script>
+    <script src="libs/flexo.js"></script>
+  </head>
+  <body>
+    <div class="expand">
+      <svg>
+        <defs>
+          <g id="UP" stroke="black" stroke-linejoin="round"
+            stroke-linecap="round" stroke-width="8">
+            <line x1="50" y1="20" x2="50" y2="80"></line>
+            <line x1="50" y1="20" x2="30" y2="40"></line>
+            <line x1="50" y1="20" x2="70" y2="40"></line>
+          </g>
+          <use id="RIGHT" xlink:href="#UP"
+            transform="rotate(90, 50, 50)"></use>
+          <use id="DOWN" xlink:href="#UP"
+            transform="rotate(180, 50, 50)"></use>
+          <use id="LEFT" xlink:href="#UP"
+            transform="rotate(270, 50, 50)"></use>
+          <polygon id="STOP" stroke="black" stroke-linejoin="round"
+            stroke-linecap="round" stroke-width="8" fill="none"
+            transform="translate(50, 50)">
+          </g>
+        </defs>
+        <g id="grid" stroke="black" fill="none"></g>
+        <g id="icons"></g>
+        <g id="masks" fill-opacity="0" stroke="#ffac2c" stroke-width="0"
+          stroke-linejoin="round"></g>
+      </svg>
+    </div>
+    <script src="hb.js"></script>
+  </body>
+</html>
+
