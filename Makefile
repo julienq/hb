@@ -10,7 +10,10 @@ GESTURE = $(LIBSDIR)/gesture
 BENDER_URL = https://github.com/bendr/bender.git
 GESTURE_URL = https://github.com/dthevenin/Gesture.git
 
-extern:	libs/flexo.js libs/pointer.js
+all:
+	@echo OK
+
+dependencies:	libs/flexo.js libs/pointer.js
 
 $(LIBSDIR):
 	$(MKDIR) $(LIBSDIR)
